@@ -1,15 +1,20 @@
+body {
+    background-color: #111;
+    color: #f1f1f1;
+}
+
 /* Top nav styling */
 .topnav {
     background-color: #111;
     overflow: hidden;
-    border-bottom: 2px solid #f1f1f1;
+    border-bottom: 2px solid #575757;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
     width: 29.5%;
     float: left;
-    color: #f2f2f2;
+    color: #f1f1f1;
     text-align: center;
     padding: 14px 23px;
     padding-left: 25px;
@@ -19,7 +24,7 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: #343434;
     color: black;
 }
 
@@ -40,7 +45,7 @@
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 14px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    border: 2px solid white;
+    border: 2px solid #575757;
 }
 
 /* The navigation menu links */
@@ -91,4 +96,8 @@
 
 #main {
     margin-left: 200px;
+}
+
+h1 {
+    text-align: center;
 }
