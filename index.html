@@ -8,10 +8,23 @@
     <title>Test Webpage</title>
 </head>
 <body>
-    <h1>Hey! I am EnderPoint</h1>
-    <hr>
-    <marquee direction="right">
-        <p>This is a Webpage</p>
-    </marquee>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="./about.html">About Me</a>
+        <a href="./contact.html">Contact</a>
+    </div>
+    
+    <!-- Use any element to open the sidenav -->
+    <span class="openNavBtn" onclick="openNav()">&#9776;</span>
+    <script src="./sidenav.js"></script>
+
+    <div id="main">
+        <h1 style="text-align: center;">Hey! I am EnderPoint</h1>
+        <hr>
+        <marquee direction="right">
+            <p>This is a Webpage</p>
+        </marquee>
+    </div>
+
 </body>
 </html>
