@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=100, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <style>
-        body {
-            font-family: Poppins;
-            font-size: medium;
-        }
-    </style>
-    <link rel="stylesheet" href="./styles.css">
-    <title>Test Webpage</title>
-</head>
-<body>
-    <div id="mySidenav" class="sidenav">
-        <button class="dropdown-btn">Projects:  
-            <i id="arrow" class="arrow down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=100, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+        <link rel="stylesheet" href="./styles.css">
+        <title>Test Webpage</title>
+    </head>
+    <body>
+        <div id="sidenav" class="sidenav">
+            <button class="dropdown-btn">Projects:  
+                <i id="arrow" class="arrow down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
         </div>
-    </div>
-    <script src="./sidenav.js"></script>
-    <div id="main">
-        <div class="topnav">
-            <a class="active" href="./index.html">Home</a>
-            <a href="./about.html">About Me</a>
-            <a href="./contact.html">Contact</a>
+        <script src="./scripts/sidenav.js"></script>
+        <div id="main">
+            <div id="topnav" class="topnav">
+                <a class="active" href="./index.html">Home</a>
+                <a href="./about.html">About Me</a>
+                <a href="./contact.html">Contact</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776</a>
+                <script src="./scripts/topnav.js"></script>
+            </div>
+            
+            <h1>Hey! I am EnderPoint</h1>
+            <hr color="#575757">
+            <marquee direction="right">
+                <p>Coming Soon</p>
+            </marquee>
         </div>
-        
-        <h1>Hey! I am EnderPoint</h1>
-        <hr color="#575757">
-        <marquee direction="right">
-            <p>Coming Soon</p>
-        </marquee>
-    </div>
 
-</body>
+    </body>
 </html>
