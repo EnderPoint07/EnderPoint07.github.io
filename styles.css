@@ -6,6 +6,30 @@ body {
     
 }
 
+h1 {
+    text-align: center;
+}
+
+.box {
+    background-color: #333333;
+    border: 2px solid #575757;
+    border-radius: 8px;
+    margin: 16px 8px;
+    padding: 0px 20px;
+    text-align: justify;
+    font-size: max(8px, 1.2vw);
+}
+.box a {
+    color: #d0a5c6;
+    text-decoration: none;
+}
+#project_list {
+    width: fit-content;
+    position: relative;
+    left: 25%;
+    text-align: center;
+}
+
 /* Top nav styling */
 .topnav {
     background-color: #111;
@@ -40,6 +64,7 @@ body {
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
     display: none;
+    width: min-content;
 }
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
@@ -133,14 +158,10 @@ body {
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav a {font-size: 8px;}
 }
 
 #main {
     min-width: 315px;
     margin-left: max(98px, 12%)
-}
-
-h1 {
-    text-align: center;
 }
