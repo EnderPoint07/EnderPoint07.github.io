@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="./styles.css">
         <title>Test Webpage</title>
     </head>
-    <body>
+    <script src="./scripts/dynNav.js"></script>
+    <body onload="scaleTopNav()">
         <div id="sidenav" class="sidenav">
             <button class="dropdown-btn">Projects:  
                 <i id="arrow" class="arrow down"></i>
@@ -25,7 +26,7 @@
                 <a class="active" href="./index.html">Home</a>
                 <a href="./about.html">About Me</a>
                 <a href="./contact.html">Contact</a>
-                <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776</a>
+                <a href="javascript:void(0);" class="icon" onclick="responsiveTopNav()">&#9776</a>
                 <script src="./scripts/topnav.js"></script>
             </div>
             

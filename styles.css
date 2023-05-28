@@ -10,18 +10,17 @@ body {
 .topnav {
     background-color: #111;
     overflow: hidden;
-    display: -webkit-box; /* don know how dont know why */
+    /* display: -webkit-box; don know how dont know why */
     border-bottom: 2px solid #575757;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-    width: 29.5%;
+    width: 20%;
     float: left;
     color: #f1f1f1;
     text-align: center;
-    padding: 14px 23px;
-    padding-left: 25px;
+    padding: 14px 32px;
     text-decoration: none;
     font-size: 17px;
 }
@@ -71,6 +70,7 @@ body {
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
+    min-width: 98px;
     width: 12%;
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
@@ -132,7 +132,8 @@ body {
 }
 
 #main {
-    margin-left: 12%;
+    min-width: 315px;
+    margin-left: max(98px, 12%)
 }
 
 h1 {
