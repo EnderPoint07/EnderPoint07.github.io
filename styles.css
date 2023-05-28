@@ -34,7 +34,6 @@ h1 {
 .topnav {
     background-color: #111;
     overflow: hidden;
-    /* display: -webkit-box; don know how dont know why */
     border-bottom: 2px solid #575757;
 }
 
