@@ -16,7 +16,7 @@ a {
 }
 
 .footer {
-    min-width: 369px;
+    min-width: 315px;
     background-color: #1f1f1f;
     border-top: 2px solid #575757;
     width: 86.5%;
@@ -109,7 +109,7 @@ a {
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
-    min-width: 98px;
+    min-width: 110px;
     width: 12%;
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */

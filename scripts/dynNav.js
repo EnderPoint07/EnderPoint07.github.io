@@ -1,11 +1,10 @@
-var topnavLinks = document.getElementById("topnav").children;
-
 function scaleTopNav() {
+    var topnavLinks = document.getElementById("topnav").children;
 
     setInterval(() => {
         var sideNavWidth = document.body.scrollWidth * 12/100;
-        topnavLinks.forEach(link => {
-            link.style.width = ((document.body.scrollWidth - sideNavWidth) * 30/100 - 64) + "px";
+        Array.from(topnavLinks).forEach(link => {
+            link.style.width = ((document.body.scrollWidth - sideNavWidth) * 20/100 - 47) + "px";
         });
     }, 100)
 }
