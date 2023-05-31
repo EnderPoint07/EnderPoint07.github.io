@@ -10,6 +10,7 @@ h1 {
     color: #04aa6d;
     text-align: center;
     letter-spacing: 10px;
+    padding: 10px;
     font-size: max(30px, 2.5vw);
 }
 
@@ -35,10 +36,10 @@ a {
 }
 
 .box {
-    background-color: #333333;
+    background-color: rgb(35, 45, 55);
     border: 2px solid #575757;
-    border-radius: 8px;
-    margin: 16px 8px;
+    border-radius: 15px;
+    margin: 16px 12px;
     padding: 0px 20px;
     text-align: justify;
     font-size: max(8px, 1.2vw);
@@ -60,11 +61,13 @@ a {
 
 /* Style the links inside the navigation bar */
 .topnav a {
+    display: table;
+    margin: auto;
     width: 20%;
     float: left;
     color: #f1f1f1;
     text-align: center;
-    padding: 15.5px 32px;
+    padding: 15.5px 30px;
     text-decoration: none;
     font-size: 17px;
 }
@@ -109,6 +112,7 @@ a {
         float: none;
         display: block;
         text-align: left;
+        margin: 0;
     }
 }
 
@@ -122,7 +126,7 @@ a {
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black*/
+    background-color: #111  ; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 14px;
     border: 2px solid #575757;
@@ -131,10 +135,10 @@ a {
 
 #sideNavTitle {
     display: table;
-    padding: 4px 0px;
+    padding: 5px ;
     margin: 0 auto;
-    font-size: 16px;
-    /* border-bottom: 2px solid #575757; */
+    font-size: max(16px, 1.5vw);
+    letter-spacing: 3px;
 }
 
 /* The navigation menu links */
@@ -152,8 +156,7 @@ a {
 }
 .dropdown-container {   
     display: block;
-    background-color: #111;
-    padding-left: 8px;
+    background: none;
 }
 
 /* When you mouse over the navigation links, change their color */
