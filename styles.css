@@ -7,7 +7,10 @@ body {
 }
 
 h1 {
+    color: #04aa6d;
     text-align: center;
+    letter-spacing: 10px;
+    font-size: max(30px, 2.5vw);
 }
 
 a {
@@ -22,9 +25,13 @@ a {
     width: 86.5%;
     text-align: center;
     padding: 34px;
-    position: absolute;
+    position: fixed;
     bottom: 0%;
-    right: 0%;
+    left: max(12%, 110px);
+    right: auto;
+}
+.footer a {
+    text-align: center;
 }
 
 .box {
