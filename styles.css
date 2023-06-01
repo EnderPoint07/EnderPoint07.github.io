@@ -36,10 +36,11 @@ a {
 }
 
 .box {
+    display: table;
     background-color: rgb(35, 45, 55);
     border: 2px solid #575757;
     border-radius: 15px;
-    margin: 16px 12px;
+    margin: 16px auto;
     padding: 0px 20px;
     font-size: max(8px, 1.2vw);
 }
