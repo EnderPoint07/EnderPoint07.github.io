@@ -44,6 +44,9 @@ a {
     padding: 0px 20px;
     font-size: max(8px, 1.2vw);
 }
+.box p {
+    width: fit-content;
+}
 
 #project_list {
     width: fit-content;
