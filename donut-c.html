@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=100, initial-scale=1.0">
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+        <link href="./prism.css" rel="stylesheet" />
         <link rel="stylesheet" href="./styles.css">
         <title>Understanding Donut.c</title>
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
@@ -47,15 +48,46 @@
             <h1>Remaking Donut.c</h1>
             
             <!-- Content -->
-            <p>
-                Test
-            </p>
+            <div class="box">
+                <p>
+                    This is how I made my version of <a href="https://www.a1k0n.net/2011/07/20/donut-math.html">donut.c</a>.
+                </p>
+            </div>
+            <div class="box" role="index">
+                <p>
+                    Index:
+                    <li><a href="#InitializeVars">The global variables</a></li>
+                </p>
+            </div>
             
+            <div class="box" role="main">
+                <p id="InitializeVars">
+                    Import the necessary libs and initialize the hyperparameters of the donut. <br>
 
+                    <b>R1</b> is the radius of the main circle while <b>R2</b> is the radius of the tube.
+                    <img src="./images/Radiuses.png" alt="Radius" width="100%">
+                    <b>output</b> is the "screen" where the donut will be drawn.
+                    <pre style="background-color: #111111; border:none; box-shadow: none">
+                        <code class="lang-python">
+# Initialize variables
+import math
+from termcolor import colored
+SCREEN_HEIGHT, SCREEN_WIDTH = 200, 200
+R1 = 50
+R2 = 25
+output = []
+                        </code>
+                    </pre>
+                </p>
+            </div>
+            <br>
+            <br>
+            <br>
             <div class="footer">
-                <a href="/">EnderPoint07.github.io</a>
+                <a href="https://github.com/EnderPoint07/Analizing-donut.c/blob/master/mydonut.py">Analizing-donut.c</a>
             </div>
         </div>
-
+        
+        <script src="./scripts/prism.js"></script>
     </body>
-</html>
+    </html>
