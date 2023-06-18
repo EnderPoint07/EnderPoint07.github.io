@@ -57,6 +57,7 @@
                 <p>
                     Index:
                     <li><a href="#InitializeVars">The global variables</a></li>
+                    <li><a href="#resetFunc">The Reset Function</a></li>
                 </p>
             </div>
             
@@ -64,10 +65,10 @@
                 <p id="InitializeVars">
                     Import the necessary libs and initialize the hyperparameters of the donut. <br>
 
-                    <b>R1</b> is the radius of the main circle while <b>R2</b> is the radius of the tube.
+                    <b>R1</b> is the radius of the main circle while <b>R2</b> is the radius of the tube:
                     <img src="./images/Radiuses.png" alt="Radius" width="100%">
                     <b>output</b> is the "screen" where the donut will be drawn.
-                    <pre style="background-color: #111111; border:none; box-shadow: none">
+                    <pre>
                         <code class="lang-python">
 # Initialize variables
 import math
@@ -80,6 +81,47 @@ output = []
                     </pre>
                 </p>
             </div>
+            <br>
+            <div class="box">
+                <p id="resetFunc">
+                    Now we define the function that lets us clear/reset the "screen":
+                    <pre>
+                        <code class="lang-py">
+def reset_output():
+"""make output array an empty 2d matrix with dimensions of the screen """
+output.clear()
+
+for row in range(SCREEN_HEIGHT):
+    _ = []
+    charNum = 0
+    for pix in range(SCREEN_WIDTH):
+        _.append('  ')
+    output.append(_)
+                        </code>
+                    </pre>
+                    This goes through each element of a 2d matrix and makes it '&nbsp;&nbsp;' (two blank spaces).
+                </p>
+            </div>
+            <div class="box">
+                <p id="render">
+                    The function used to render our <b>output</b> array to the screen:
+                    <pre>
+                        <code class="lang-py">
+def render():
+    print('\x1b[H')
+    for row in range(SCREEN_HEIGHT):
+        for colm in range(SCREEN_WIDTH):
+            print(output[row][colm], end='')
+        print()
+                    </code>
+                    </pre>
+                    <u>\x1b[H</u> sends cursor to cursor home position. <br>
+                    Then it goes through each element in the row and prints it <u>without a space/newline at the end</u>.
+                    <br>
+                    After reaching the end of the row, it starts a newline by doing print().
+                </p>
+            </div>
+            <br>
             <br>
             <br>
             <br>
