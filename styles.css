@@ -78,7 +78,6 @@ a {
 /* Change the color of links on hover */
 .topnav a:hover {
     background-color: #343434;
-    color: black;
 }
 
 /* Add a color to the active/current link */

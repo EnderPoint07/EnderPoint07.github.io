@@ -114,12 +114,140 @@ def render():
         for colm in range(SCREEN_WIDTH):
             print(output[row][colm], end='')
         print()
-                    </code>
+                        </code>
                     </pre>
                     <u>\x1b[H</u> sends cursor to cursor home position. <br>
                     Then it goes through each element in the row and prints it <u>without a space/newline at the end</u>.
                     <br>
                     After reaching the end of the row, it starts a newline by doing print().
+                </p>
+            </div>  
+            <div class="box">
+                <p>
+                    Now for the real stuff. The function that actually creates, rotates and shades the torus (donut):
+
+                    <pre>
+                        <code class="lang-py">
+def compute_frame(Rx, Ry, Rz):
+    # First we precompute the sins and coses of the angles the object is gonna be rotated by
+    cosRx = math.cos(Rx)
+    sinRx = math.sin(Rx)
+
+    sinRy = math.sin(Ry)
+    cosRy = math.cos(Ry)
+
+    sinRz = math.sin(Rz)
+    cosRz = math.cos(Rz)
+
+    theta = 0  # theta is used to calculate each point on the circle with angle theta relative to the center
+    while theta <= 2 * math.pi:
+        # precompute the sin and cos of theta
+        costheta = math.cos(theta)
+        sintheta = math.sin(theta)
+
+        phi = 0  # phi is used to calculate each point on the another circle perpendicular to the main with angle phi
+        # with the origin being the calculated point from theta
+        while phi <= 2 * math.pi:
+            cosphi = math.cos(phi)
+            sinphi = math.sin(phi)
+
+            # Magic formula for torus
+            x = (R1 + R2 * costheta) * cosphi
+            y = (R1 + R2 * costheta) * sinphi
+            z = R2 * sintheta
+
+            # Now it's time to rotate each point that we have gotten around an axis by multiplying by the rotation
+            # matrices
+
+            # Rotation around x axis:
+            # x' = x
+            # y' = y * cos(Rx) - z * sin(Rx)
+            # z' = y * sin(Rx) + z * cos(Rx)
+
+            x_Rx = x
+            y_Rx = y * cosRx - z * sinRx
+            z_Rx = y * sinRx - z * cosRx
+
+            # Rotation around y axis:
+            # x'' = x' * cos(Ry) + z' * sin(Ry)
+            # y'' = y'
+            # z'' = -x' * sin(Ry) + z' * cos(Ry)
+
+            x_Rxy = x_Rx * cosRy + z_Rx * sinRy
+            y_Rxy = y_Rx
+            z_Rxy = -x_Rx * sinRy + z_Rx * cosRy
+
+            # Rotation around z axis:
+            # x''' = x'' * cos(Rz) - y'' * sin(Rz)
+            # y''' = x'' * sin(Rz) + y'' * cos(Rz)
+            # z''' = z''
+
+            rot_x = x_Rxy * cosRz - y_Rxy * sinRz
+            rot_y = x_Rxy * sinRz + y_Rxy * cosRz
+            rot_z = z_Rxy
+
+            # Calculate the location of the point on screen
+            px = int(rot_x + SCREEN_WIDTH / 2)
+            py = int(rot_y + SCREEN_HEIGHT / 2)
+
+            if rot_z >= 0:
+                output[px][py] = '@ '
+            else:
+                output[px][py] = colored('$ ', 'red')
+
+            phi += 0.07
+        theta += 0.07
+    render()
+                        </code>
+                    </pre>
+
+                    How about we first break it down?
+                    <hr>
+                    <pre>
+                        <code class="lang-py">
+def compute_frame(Rx, Ry, Rz):
+    cosRx = math.cos(Rx)
+    sinRx = math.sin(Rx)
+
+    sinRy = math.sin(Ry)
+    cosRy = math.cos(Ry)
+
+    sinRz = math.sin(Rz)
+    cosRz = math.cos(Rz)
+                        </code>
+                    </pre>
+                    after the defining the function with inputs (Rx, Ry, Rz) for the rotation in its respective axis, <br>
+                    we precompute their cos and sin values as to not do unnecessary repetitions of calculations.
+                    <hr>
+                    To actually draw the donut we use the holy parameterized equations of a torus: <br>
+                    <img src="images/parameterizedEquTorus.svg" alt="Parameterized Equations of a Torus"> <br> 
+                    here, R is the distance from the center of the tube to the center of the torus i.e our <b>R1</b> value, <br>
+                    r is the radius of the tube i.e our <b>R2</b> value.
+
+                    <pre>
+                        <code class="lang-py">
+theta = 0  # theta is used to calculate each point on the circle with angle theta relative to the center
+while theta <= 2 * math.pi:
+    # precompute the sin and cos of theta
+    costheta = math.cos(theta)
+    sintheta = math.sin(theta)
+
+    phi = 0  # phi is used to calculate each point on the another circle perpendicular to the main with angle phi
+    # with the origin being the calculated point from theta
+    while phi <= 2 * math.pi:
+        cosphi = math.cos(phi)
+        sinphi = math.sin(phi)
+
+        # Magic formula for torus
+        x = (R1 + R2 * costheta) * cosphi
+        y = (R1 + R2 * costheta) * sinphi
+        z = R2 * sintheta
+                        </code>
+                    </pre>
+                    As mentioned above, θ and φ vary from 0 to 2π, hence the loops. <br>
+                    Inside the definition of the loops we precompute their sin/cos. <br>
+                    Finally we use the parameterized equations to find the point on the surface of the torus.
+                    (x, y, z) is the 3d position of the point on the torus.
                 </p>
             </div>
             <br>
