@@ -59,6 +59,8 @@
                     <li><a href="#InitializeVars">The global variables</a></li>
                     <li><a href="#resetFunc">Reset the array</a></li>
                     <li><a href="#render">Render the array</a></li>
+                    <li><a href="#mainFunc">The main function</a></li>
+                    
                 </p>
             </div>
             
@@ -123,7 +125,7 @@ def render():
                 </p>
             </div>  
             <div class="box">
-                <p>
+                <p id="mainFunc">
                     Now for the real stuff. The function that actually creates, rotates and shades the torus (donut):
 
                     <pre>
@@ -248,6 +250,75 @@ while theta <= 2 * math.pi:
                     Inside the definition of the loops we precompute their sin/cos. <br>
                     Finally we use the parameterized equations to find the point on the surface of the torus.
                     (x, y, z) is the 3d position of the point on the torus.
+                    <hr>
+                    Now for the last piece of the function; the rotation! <br>
+                    We will use the <a href="https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions">3d rotation matrices</a>
+                    to rotate the point we just got from above in all 3 dimentions. <br>  
+                    <img src="images/rotationMatrix.svg" alt="3D Rotation Matrices"> <br>
+                    by doing matrix multiplication we can get: <br>
+                    [x`, y`, z`] = [x, y, z] × [(the rotation matrix of the axis)]
+                    the rotation matrices for each axis is as follows:
+                    <pre>
+            Rotation around x axis:
+            x` = x
+            y` = y * cos(Rx) - z * sin(Rx)
+            z` = y * sin(Rx) + z * cos(Rx)
+
+            Rotation around y axis:
+            x`` = x` * cos(Ry) + z` * sin(Ry)
+            y`` = y`
+            z`` = -x` * sin(Ry) + z` * cos(Ry)
+
+            
+            Rotation around z axis:
+            x``` = x`` * cos(Rz) - y`` * sin(Rz)
+            y``` = x`` * sin(Rz) + y`` * cos(Rz)
+            z``` = z``
+                    </pre>
+                    by chaining the results together like this we can have the rotation done in all the axises. <br>
+                    here is the code:
+                    <pre>
+                        <code class="lang-py">
+# Now it's time to rotate each point that we have gotten around an axis by multiplying by the rotation matrices
+
+x_Rx = x
+y_Rx = y * cosRx - z * sinRx
+z_Rx = y * sinRx - z * cosRx
+
+x_Rxy = x_Rx * cosRy + z_Rx * sinRy
+y_Rxy = y_Rx
+z_Rxy = -x_Rx * sinRy + z_Rx * cosRy
+
+rot_x = x_Rxy * cosRz - y_Rxy * sinRz
+rot_y = x_Rxy * sinRz + y_Rxy * cosRz
+rot_z = z_Rxy
+                        </code>
+                    </pre>
+                    <hr>
+                    The hard part is now done. All thats left is to project is too offset the points so their
+                    positions correspond to a valid index in the <b>output</b> array.<br>
+                    Its very simple, we just shift the point by half of the screen width toward
+                    the right then convert it to an int. <br>
+                    <pre>
+                        <code class="lang-py">
+# Calculate the location of the point on screen
+px = int(rot_x + SCREEN_WIDTH / 2)
+py = int(rot_y + SCREEN_HEIGHT / 2)
+                        </code>
+                    </pre>
+                    <hr>
+                    <span style="color: red;"><b><i>TODO: IMPLEMENT LIGHTING</i></b></span>
+                    <hr>
+                    Now we just place the point into the array and render it to the screen.
+                    <pre>
+                        <code class="lang-py">
+        output[px][py] = '@ ' # inside the phi while loop
+
+        phi += 0.07 # inside the phi while loop
+    theta += 0.07 # inside theta while loop
+render() # inside the function
+                        </code>
+                    </pre> 
                 </p>
             </div>
             <br>
