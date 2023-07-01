@@ -139,7 +139,8 @@ def render():
                     <pre>
                         <code class="lang-py">
 def compute_frame(Rx, Ry, Rz):
-    # First we precompute the sins and coses of the angles the object is gonna be rotated by
+    # First we precompute the sins and coses 
+    #of the angles the object is gonna be rotated by
     cosRx = math.cos(Rx)
     sinRx = math.sin(Rx)
 
@@ -149,14 +150,16 @@ def compute_frame(Rx, Ry, Rz):
     sinRz = math.sin(Rz)
     cosRz = math.cos(Rz)
 
-    theta = 0  # theta is used to calculate each point on the circle with angle theta relative to the center
+    theta = 0  # theta is used to calculate each point
+    # on the circle with angle theta relative to the center
     while theta <= 2 * math.pi:
         # precompute the sin and cos of theta
         costheta = math.cos(theta)
         sintheta = math.sin(theta)
 
-        phi = 0  # phi is used to calculate each point on the another circle perpendicular to the main with angle phi
-        # with the origin being the calculated point from theta
+        phi = 0  # phi is used to calculate each point on the
+                 # another circle perpendicular to the main with angle phi
+                 # with the origin being the calculated point from theta
         while phi <= 2 * math.pi:
             cosphi = math.cos(phi)
             sinphi = math.sin(phi)
@@ -166,8 +169,8 @@ def compute_frame(Rx, Ry, Rz):
             y = (R1 + R2 * costheta) * sinphi
             z = R2 * sintheta
 
-            # Now it's time to rotate each point that we have gotten around an axis by multiplying by the rotation
-            # matrices
+            # Now it's time to rotate each point that we have gotten 
+            # matrices around an axis by multiplying by the rotation
 
             # Rotation around x axis:
             # x' = x
@@ -236,14 +239,16 @@ def compute_frame(Rx, Ry, Rz):
 
                     <pre>
                         <code class="lang-py">
-theta = 0  # theta is used to calculate each point on the circle with angle theta relative to the center
+theta = 0  # theta is used to calculate each 
+           # point on the circle with angle theta relative to the center
 while theta <= 2 * math.pi:
     # precompute the sin and cos of theta
     costheta = math.cos(theta)
     sintheta = math.sin(theta)
 
-    phi = 0  # phi is used to calculate each point on the another circle perpendicular to the main with angle phi
-    # with the origin being the calculated point from theta
+    phi = 0  # phi is used to calculate each point on the another circle
+             # perpendicular to the main with angle phi
+             # with the origin being the calculated point from theta
     while phi <= 2 * math.pi:
         cosphi = math.cos(phi)
         sinphi = math.sin(phi)
@@ -287,7 +292,8 @@ while theta <= 2 * math.pi:
                     here is the code:
                     <pre>
                         <code class="lang-py">
-# Now it's time to rotate each point that we have gotten around an axis by multiplying by the rotation matrices
+# Now it's time to rotate each point that we have gotten around 
+# an axis by multiplying by the rotation matrices
 
 x_Rx = x
 y_Rx = y * cosRx - z * sinRx
@@ -314,7 +320,8 @@ py = int(rot_y + SCREEN_HEIGHT / 2)
 min_z = -(R1 + R2)
 max_z = R1 + R2
 
-luminance = ((0 - 11) * ((rot_z - min_z)/(max_z - min_z))) + 11 # normalize z between 0 and 11
+# normalize z between 0 and 11
+luminance = ((0 - 11) * ((rot_z - min_z)/(max_z - min_z))) + 11 
                         </code>
                     </pre>
                     Here the "projection" is very simple which is just shifting the point by half of the screen width
