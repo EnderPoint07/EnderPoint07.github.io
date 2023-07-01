@@ -54,14 +54,22 @@
                 </p>
             </div>
             <div class="box" role="index">
-                <p>
-                    Index:
+                <p>Index:</p>
+                <ul>
                     <li><a href="#InitializeVars">The global variables</a></li>
                     <li><a href="#resetFunc">Reset the array</a></li>
                     <li><a href="#render">Render the array</a></li>
-                    <li><a href="#mainFunc">The main function</a></li>
-                    
-                </p>
+                    <li><a href="#mainFunc">The main function</a>
+                        <ul>
+                            <li><a href="#precompute">Define Function and Precompute the sin and cos</a></li>
+                            <li><a href="#parameterizedEq">Parameterized Equations For a torus</a></li>
+                            <li><a href="#rotation">Rotating the points</a></li>
+                            <li><a href="#luminance">Project x and y and calculate their luminance</a></li>
+                            <li><a href="#writeToOutput">Write the point to the output array</a></li>
+                        </ul>
+                    </li>
+                                        
+                </ul>
             </div>
             
             <div class="box" role="main">
@@ -202,7 +210,7 @@ def compute_frame(Rx, Ry, Rz):
     render()
                         </code>
                     </pre>
-
+                    <br id="precompute">
                     How about we first break it down?
                     <hr>
                     <pre>
@@ -220,8 +228,8 @@ def compute_frame(Rx, Ry, Rz):
                     </pre>
                     after the defining the function with inputs (Rx, Ry, Rz) for the rotation in its respective axis, <br>
                     we precompute their cos and sin values as to not do unnecessary repetitions of calculations.
-                    <hr>
-                    To actually draw the donut we use the holy parameterized equations of a torus: <br>
+                    <hr id="parameterizedEq">
+                    To actually draw the donut we use the holy <a href="https://en.wikipedia.org/wiki/Torus#Geometry">parameterized equations of a torus</a>: <br>
                     <img src="images/parameterizedEquTorus.svg" alt="Parameterized Equations of a Torus"> <br> 
                     here, R is the distance from the center of the tube to the center of the torus i.e our <b>R1</b> value, <br>
                     r is the radius of the tube i.e our <b>R2</b> value.
@@ -250,7 +258,7 @@ while theta <= 2 * math.pi:
                     Inside the definition of the loops we precompute their sin/cos. <br>
                     Finally we use the parameterized equations to find the point on the surface of the torus.
                     (x, y, z) is the 3d position of the point on the torus.
-                    <hr>
+                    <hr id="rotation">
                     Now for the last piece of the function; the rotation! <br>
                     We will use the <a href="https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions">3d rotation matrices</a>
                     to rotate the point we just got from above in all 3 dimentions. <br>  
@@ -294,29 +302,46 @@ rot_y = x_Rxy * sinRz + y_Rxy * cosRz
 rot_z = z_Rxy
                         </code>
                     </pre>
-                    <hr>
-                    The hard part is now done. All thats left is to project is too offset the points so their
-                    positions correspond to a valid index in the <b>output</b> array.<br>
-                    Its very simple, we just shift the point by half of the screen width toward
-                    the right then convert it to an int. <br>
+                    <hr id="luminance">
+                    The hard part is now done. All thats left is to calculate their luminance and project them 
+                    too offset the points so their positions correspond to a valid index in the <b>output</b> array.<br>
                     <pre>
                         <code class="lang-py">
 # Calculate the location of the point on screen
 px = int(rot_x + SCREEN_WIDTH / 2)
 py = int(rot_y + SCREEN_HEIGHT / 2)
+
+min_z = -(R1 + R2)
+max_z = R1 + R2
+
+luminance = ((0 - 11) * ((rot_z - min_z)/(max_z - min_z))) + 11 # normalize z between 0 and 11
                         </code>
                     </pre>
-                    <hr>
-                    <span style="color: red;"><b><i>TODO: IMPLEMENT LIGHTING</i></b></span>
-                    <hr>
-                    Now we just place the point into the array and render it to the screen.
+                    Here the "projection" is very simple which is just shifting the point by half of the screen width
+                    toward the right then convert it to an int. <br>
+                    But if we pay our attention to <b>luminance</b> which is basically the proxmity of the point to the screen,
+                    what we are doing here is 
+                    <a href="https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range">normalizing the z value</a> 
+                    between 0 and 11 (the indices of the characters we use to show luminance). 
+                    <a href="https://www.desmos.com/calculator/zkssbjwdif">See here as to how I have done it</a>. <br>
+                    It's basically a value between 0 and 11 for each value between (R1 + R2) and -(R1 + R2) with
+                    greater the value being lesser the z value i.e. more proximity.<br>
+                    <hr id="writeToOutput">
+                    We then round the luminance to an int and write it at its corresponding px, py position in the array
+                    and render it to the screen.
                     <pre>
                         <code class="lang-py">
-        output[px][py] = '@ ' # inside the phi while loop
+        if luminance > z_buffer[px][py]:  # inside the phi while loop
+            z_buffer[px][py] = luminance
+            output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)] + ' ', "red")
 
-        phi += 0.07 # inside the phi while loop
-    theta += 0.07 # inside theta while loop
-render() # inside the function
+            if z < 0:  # i.e further from us
+                output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)])
+                        
+        phi += 0.07  # inside the phi while loop
+    theta += 0.07  # inside theta while loop
+
+render()  # inside the function
                         </code>
                     </pre> 
                 </p>
