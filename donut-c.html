@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="./styles.css">
         <title>Understanding Donut.c</title>
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-        <script defer data-domain="enderpoint.is-a.dev" src="https://analytics.is-a.dev/js/script.js"></script>
     </head>
     <body onload="scaleTopNav()">
         <script src="./scripts/dynNav.js"></script>
@@ -69,46 +68,46 @@
                             <li><a href="#writeToOutput">Write the point to the output array</a></li>
                         </ul>
                     </li>
-                                        
+                    
                 </ul>
             </div>
             
             <div class="box" role="main">
                 <p id="InitializeVars">
                     Import the necessary libs and initialize the hyperparameters of the donut. <br>
-
+                    
                     <b>R1</b> is the radius of the main circle while <b>R2</b> is the radius of the tube:
                     <img src="./images/Radiuses.png" alt="Radius" width="100%">
                     <b>output</b> is the "screen" where the donut will be drawn.
                     <pre>
                         <code class="lang-python">
-# Initialize variables
-import math
-from termcolor import colored
-SCREEN_HEIGHT, SCREEN_WIDTH = 200, 200
-R1 = 50
-R2 = 25
-output = []
+                            # Initialize variables
+                            import math
+                            from termcolor import colored
+                            SCREEN_HEIGHT, SCREEN_WIDTH = 200, 200
+                            R1 = 50
+                            R2 = 25
+                            output = []
                         </code>
                     </pre>
                 </p>
             </div>
-
+            
             <div class="box">
                 <p id="resetFunc">
                     Now we define the function that lets us clear/reset the "screen":
                     <pre>
                         <code class="lang-py">
-def reset_output():
-"""make output array an empty 2d matrix with dimensions of the screen """
-output.clear()
-
-for row in range(SCREEN_HEIGHT):
-    _ = []
-    charNum = 0
-    for pix in range(SCREEN_WIDTH):
-        _.append('  ')
-    output.append(_)
+                            def reset_output():
+                            """make output array an empty 2d matrix with dimensions of the screen """
+                            output.clear()
+                            
+                            for row in range(SCREEN_HEIGHT):
+                            _ = []
+                            charNum = 0
+                            for pix in range(SCREEN_WIDTH):
+                            _.append('  ')
+                            output.append(_)
                         </code>
                     </pre>
                     This goes through each element of a 2d matrix and makes it '&nbsp;&nbsp;' (two blank spaces).
@@ -119,12 +118,12 @@ for row in range(SCREEN_HEIGHT):
                     The function used to render our <b>output</b> array to the screen:
                     <pre>
                         <code class="lang-py">
-def render():
-    print('\x1b[H')
-    for row in range(SCREEN_HEIGHT):
-        for colm in range(SCREEN_WIDTH):
-            print(output[row][colm], end='')
-        print()
+                            def render():
+                            print('\x1b[H')
+                            for row in range(SCREEN_HEIGHT):
+                            for colm in range(SCREEN_WIDTH):
+                            print(output[row][colm], end='')
+                            print()
                         </code>
                     </pre>
                     <u>\x1b[H</u> sends cursor to cursor home position. <br>
@@ -136,101 +135,101 @@ def render():
             <div class="box">
                 <p id="mainFunc">
                     Now for the real stuff. The function that actually creates, rotates and shades the torus (donut):
-
+                    
                     <pre>
                         <code class="lang-py">
-def compute_frame(Rx, Ry, Rz):
-    # First we precompute the sins and coses 
-    #of the angles the object is gonna be rotated by
-    cosRx = math.cos(Rx)
-    sinRx = math.sin(Rx)
-
-    sinRy = math.sin(Ry)
-    cosRy = math.cos(Ry)
-
-    sinRz = math.sin(Rz)
-    cosRz = math.cos(Rz)
-
-    theta = 0  # theta is used to calculate each point
-    # on the circle with angle theta relative to the center
-    while theta <= 2 * math.pi:
-        # precompute the sin and cos of theta
-        costheta = math.cos(theta)
-        sintheta = math.sin(theta)
-
-        phi = 0  # phi is used to calculate each point on the
-                 # another circle perpendicular to the main with angle phi
-                 # with the origin being the calculated point from theta
-        while phi <= 2 * math.pi:
-            cosphi = math.cos(phi)
-            sinphi = math.sin(phi)
-
-            # Magic formula for torus
-            x = (R1 + R2 * costheta) * cosphi
-            y = (R1 + R2 * costheta) * sinphi
-            z = R2 * sintheta
-
-            # Now it's time to rotate each point that we have gotten 
-            # matrices around an axis by multiplying by the rotation
-
-            # Rotation around x axis:
+                            def compute_frame(Rx, Ry, Rz):
+                            # First we precompute the sins and coses 
+                            #of the angles the object is gonna be rotated by
+                            cosRx = math.cos(Rx)
+                            sinRx = math.sin(Rx)
+                            
+                            sinRy = math.sin(Ry)
+                            cosRy = math.cos(Ry)
+                            
+                            sinRz = math.sin(Rz)
+                            cosRz = math.cos(Rz)
+                            
+                            theta = 0  # theta is used to calculate each point
+                            # on the circle with angle theta relative to the center
+                            while theta <= 2 * math.pi:
+                            # precompute the sin and cos of theta
+                            costheta = math.cos(theta)
+                            sintheta = math.sin(theta)
+                            
+                            phi = 0  # phi is used to calculate each point on the
+                            # another circle perpendicular to the main with angle phi
+                            # with the origin being the calculated point from theta
+                            while phi <= 2 * math.pi:
+                            cosphi = math.cos(phi)
+                            sinphi = math.sin(phi)
+                            
+                            # Magic formula for torus
+                            x = (R1 + R2 * costheta) * cosphi
+                            y = (R1 + R2 * costheta) * sinphi
+                            z = R2 * sintheta
+                            
+                            # Now it's time to rotate each point that we have gotten 
+                            # matrices around an axis by multiplying by the rotation
+                            
+                            # Rotation around x axis:
             # x' = x
             # y' = y * cos(Rx) - z * sin(Rx)
             # z' = y * sin(Rx) + z * cos(Rx)
-
+            
             x_Rx = x
             y_Rx = y * cosRx - z * sinRx
             z_Rx = y * sinRx - z * cosRx
-
+            
             # Rotation around y axis:
             # x'' = x' * cos(Ry) + z' * sin(Ry)
             # y'' = y'
             # z'' = -x' * sin(Ry) + z' * cos(Ry)
-
+            
             x_Rxy = x_Rx * cosRy + z_Rx * sinRy
             y_Rxy = y_Rx
             z_Rxy = -x_Rx * sinRy + z_Rx * cosRy
-
+            
             # Rotation around z axis:
             # x''' = x'' * cos(Rz) - y'' * sin(Rz)
             # y''' = x'' * sin(Rz) + y'' * cos(Rz)
             # z''' = z''
-
+            
             rot_x = x_Rxy * cosRz - y_Rxy * sinRz
             rot_y = x_Rxy * sinRz + y_Rxy * cosRz
             rot_z = z_Rxy
-
+            
             # Calculate the location of the point on screen
             px = int(rot_x + SCREEN_WIDTH / 2)
             py = int(rot_y + SCREEN_HEIGHT / 2)
-
+            
             if rot_z >= 0:
-                output[px][py] = '@ '
+            output[px][py] = '@ '
             else:
-                output[px][py] = colored('$ ', 'red')
-
+            output[px][py] = colored('$ ', 'red')
+            
             phi += 0.07
-        theta += 0.07
-    render()
-                        </code>
-                    </pre>
-                    <br id="precompute">
-                    How about we first break it down?
-                    <hr>
-                    <pre>
-                        <code class="lang-py">
-def compute_frame(Rx, Ry, Rz):
-    cosRx = math.cos(Rx)
-    sinRx = math.sin(Rx)
-
-    sinRy = math.sin(Ry)
-    cosRy = math.cos(Ry)
-
-    sinRz = math.sin(Rz)
-    cosRz = math.cos(Rz)
-                        </code>
-                    </pre>
-                    after the defining the function with inputs (Rx, Ry, Rz) for the rotation in its respective axis, <br>
+            theta += 0.07
+            render()
+        </code>
+    </pre>
+    <br id="precompute">
+    How about we first break it down?
+    <hr>
+    <pre>
+        <code class="lang-py">
+            def compute_frame(Rx, Ry, Rz):
+            cosRx = math.cos(Rx)
+            sinRx = math.sin(Rx)
+            
+            sinRy = math.sin(Ry)
+            cosRy = math.cos(Ry)
+            
+            sinRz = math.sin(Rz)
+            cosRz = math.cos(Rz)
+        </code>
+    </pre>
+    after the defining the function with inputs (Rx, Ry, Rz) for the rotation in its respective axis, <br>
                     we precompute their cos and sin values as to not do unnecessary repetitions of calculations.
                     <hr id="parameterizedEq">
                     To actually draw the donut we use the holy <a href="https://en.wikipedia.org/wiki/Torus#Geometry">parameterized equations of a torus</a>: <br>
@@ -238,27 +237,27 @@ def compute_frame(Rx, Ry, Rz):
                     <a href="https://www.youtube.com/watch?v=heFhbV5J_bY">(If you want to know how they are derived)</a> <br>
                     here, R is the distance from the center of the tube to the center of the torus i.e our <b>R1</b> value, <br>
                     r is the radius of the tube i.e our <b>R2</b> value.
-
+                    
                     <pre>
                         <code class="lang-py">
-theta = 0  # theta is used to calculate each 
-           # point on the circle with angle theta relative to the center
-while theta <= 2 * math.pi:
-    # precompute the sin and cos of theta
-    costheta = math.cos(theta)
-    sintheta = math.sin(theta)
-
-    phi = 0  # phi is used to calculate each point on the another circle
-             # perpendicular to the main with angle phi
-             # with the origin being the calculated point from theta
-    while phi <= 2 * math.pi:
-        cosphi = math.cos(phi)
-        sinphi = math.sin(phi)
-
-        # Magic formula for torus
-        x = (R1 + R2 * costheta) * cosphi
-        y = (R1 + R2 * costheta) * sinphi
-        z = R2 * sintheta
+                            theta = 0  # theta is used to calculate each 
+                            # point on the circle with angle theta relative to the center
+                            while theta <= 2 * math.pi:
+                            # precompute the sin and cos of theta
+                            costheta = math.cos(theta)
+                            sintheta = math.sin(theta)
+                            
+                            phi = 0  # phi is used to calculate each point on the another circle
+                            # perpendicular to the main with angle phi
+                            # with the origin being the calculated point from theta
+                            while phi <= 2 * math.pi:
+                            cosphi = math.cos(phi)
+                            sinphi = math.sin(phi)
+                            
+                            # Magic formula for torus
+                            x = (R1 + R2 * costheta) * cosphi
+                            y = (R1 + R2 * costheta) * sinphi
+                            z = R2 * sintheta
                         </code>
                     </pre>
                     As mentioned above, θ and φ vary from 0 to 2π, hence the loops. <br>
@@ -274,40 +273,40 @@ while theta <= 2 * math.pi:
                     [x`, y`, z`] = [x, y, z] × [(the rotation matrix of the axis)]
                     the rotation matrices for each axis is as follows:
                     <pre>
-            Rotation around x axis:
-            x` = x
-            y` = y * cos(Rx) - z * sin(Rx)
-            z` = y * sin(Rx) + z * cos(Rx)
-
-            Rotation around y axis:
-            x`` = x` * cos(Ry) + z` * sin(Ry)
-            y`` = y`
-            z`` = -x` * sin(Ry) + z` * cos(Ry)
-
-            
-            Rotation around z axis:
-            x``` = x`` * cos(Rz) - y`` * sin(Rz)
-            y``` = x`` * sin(Rz) + y`` * cos(Rz)
-            z``` = z``
+                        Rotation around x axis:
+                        x` = x
+                        y` = y * cos(Rx) - z * sin(Rx)
+                        z` = y * sin(Rx) + z * cos(Rx)
+                        
+                        Rotation around y axis:
+                        x`` = x` * cos(Ry) + z` * sin(Ry)
+                        y`` = y`
+                        z`` = -x` * sin(Ry) + z` * cos(Ry)
+                        
+                        
+                        Rotation around z axis:
+                        x``` = x`` * cos(Rz) - y`` * sin(Rz)
+                        y``` = x`` * sin(Rz) + y`` * cos(Rz)
+                        z``` = z``
                     </pre>
                     by chaining the results together like this we can have the rotation done in all the axises. <br>
                     here is the code:
                     <pre>
                         <code class="lang-py">
-# Now it's time to rotate each point that we have gotten around 
-# an axis by multiplying by the rotation matrices
-
-x_Rx = x
-y_Rx = y * cosRx - z * sinRx
-z_Rx = y * sinRx - z * cosRx
-
-x_Rxy = x_Rx * cosRy + z_Rx * sinRy
-y_Rxy = y_Rx
-z_Rxy = -x_Rx * sinRy + z_Rx * cosRy
-
-rot_x = x_Rxy * cosRz - y_Rxy * sinRz
-rot_y = x_Rxy * sinRz + y_Rxy * cosRz
-rot_z = z_Rxy
+                            # Now it's time to rotate each point that we have gotten around 
+                            # an axis by multiplying by the rotation matrices
+                            
+                            x_Rx = x
+                            y_Rx = y * cosRx - z * sinRx
+                            z_Rx = y * sinRx - z * cosRx
+                            
+                            x_Rxy = x_Rx * cosRy + z_Rx * sinRy
+                            y_Rxy = y_Rx
+                            z_Rxy = -x_Rx * sinRy + z_Rx * cosRy
+                            
+                            rot_x = x_Rxy * cosRz - y_Rxy * sinRz
+                            rot_y = x_Rxy * sinRz + y_Rxy * cosRz
+                            rot_z = z_Rxy
                         </code>
                     </pre>
                     <hr id="luminance">
@@ -315,8 +314,8 @@ rot_z = z_Rxy
                     too offset the points so their positions correspond to a valid index in the <b>output</b> array.<br>
                     <pre>
                         <code class="lang-py">
-# Calculate the location of the point on screen
-px = int(rot_x + SCREEN_WIDTH / 2)
+                            # Calculate the location of the point on screen
+                            px = int(rot_x + SCREEN_WIDTH / 2)
 py = int(rot_y + SCREEN_HEIGHT / 2)
 
 min_z = -(R1 + R2)
@@ -324,46 +323,48 @@ max_z = R1 + R2
 
 # normalize z between 0 and 11
 luminance = ((0 - 11) * ((rot_z - min_z)/(max_z - min_z))) + 11 
-                        </code>
-                    </pre>
-                    Here the "projection" is very simple which is just shifting the point by half of the screen width
-                    toward the right then convert it to an int. <br>
-                    But if we pay our attention to <b>luminance</b> which is basically the proxmity of the point to the screen,
-                    what we are doing here is 
-                    <a href="https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range">normalizing the z value</a> 
-                    between 0 and 11 (the indices of the characters we use to show luminance). 
-                    <a href="https://www.desmos.com/calculator/zkssbjwdif">See here as to how I have done it</a>. <br>
-                    It's basically a value between 0 and 11 for each value between (R1 + R2) and -(R1 + R2) with
-                    greater the value being lesser the z value i.e. more proximity.<br>
-                    <hr id="writeToOutput">
-                    We then round the luminance to an int and write it at its corresponding px, py position in the array
-                    and render it to the screen.
-                    <pre>
-                        <code class="lang-py">
+</code>
+</pre>
+Here the "projection" is very simple which is just shifting the point by half of the screen width
+toward the right then convert it to an int. <br>
+But if we pay our attention to <b>luminance</b> which is basically the proxmity of the point to the screen,
+what we are doing here is 
+<a href="https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range">normalizing the z value</a> 
+between 0 and 11 (the indices of the characters we use to show luminance). 
+<a href="https://www.desmos.com/calculator/zkssbjwdif">See here as to how I have done it</a>. <br>
+It's basically a value between 0 and 11 for each value between (R1 + R2) and -(R1 + R2) with
+greater the value being lesser the z value i.e. more proximity.<br>
+<hr id="writeToOutput">
+We then round the luminance to an int and write it at its corresponding px, py position in the array
+and render it to the screen.
+<pre>
+    <code class="lang-py">
         if luminance > z_buffer[px][py]:  # inside the phi while loop
-            z_buffer[px][py] = luminance
-            output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)] + ' ', "red")
-
-            if z < 0:  # i.e further from us
-                output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)])
-                        
+        z_buffer[px][py] = luminance
+        output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)] + ' ', "red")
+        
+        if z < 0:  # i.e further from us
+        output[px][py] = colored(r'.,-~:;=!*#$@'[round(luminance)])
+        
         phi += 0.07  # inside the phi while loop
-    theta += 0.07  # inside theta while loop
-
-render()  # inside the function
-                        </code>
-                    </pre> 
-                </p>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div class="footer">
-                <a href="https://github.com/EnderPoint07/Analizing-donut.c/blob/master/mydonut.py">Analizing-donut.c</a>
-            </div>
+        theta += 0.07  # inside theta while loop
+        
+        render()  # inside the function
+    </code>
+</pre> 
+</p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="footer">
+    <a href="https://github.com/EnderPoint07/Analizing-donut.c/blob/master/mydonut.py">Analizing-donut.c</a>
+</div>
         </div>
         
         <script src="./scripts/prism.js"></script>
+        <script defer data-domain="enderpoint.is-a.dev" src="https://analytics.is-a.dev/js/script.js"></script>
     </body>
     </html>
+    
